@@ -6,7 +6,7 @@ fun main(){
 
     // kotlin 은 기본적으로 null 을 허용하지 않음 -> error
     // 변수의 null 허용 여부에 따라 String 과 String? 은 서로 다른 자료형임
-    // str1 = null
+    str1 = null
     println("str1: $str1, length: ${str1?.length}") // null 허용하면 length 실행 위해서 ?. 이나 !!. 만 허용
 
     // 세이프 콜 ?. : 변수 검사 후 null 이 아니면 length 접근해 값 읽음
