@@ -1,0 +1,31 @@
+# 코틀린 공부하기
+참고한 책 : 코틀린 프로그래밍 - 황영덕   
+<http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9791163030843&orderClick=LAG&Kc=>
+## 2021.04.01.Thu   
+(만우절 이었는데 솔직히 만우절 장난은 학교 다닐 때나 재밌었다)   
+### Kotlin의 null 처리?
+Kotlin은 기본적으로 null을 허용하지 않는다고 한다   
+null을 사용하고 싶으면 자료형 뒤에 '?'를 명시해야 한다   
+```kotlin
+var str1: String? = "Hello Kotlin"
+```
+이렇게 null을 허용한 변수를 사용하기 위해서는 **세이프 콜**과 **단정 기호**를 사용해야 한다
+#### 세이프 콜 (?.)
+null이 할당되어 있을 가능성이 있는 변수를 검사하여 안전하게 호출하도록 도와주는 기법
+```kotlin
+str1 = null
+println("str1: $str1, length: ${str1?.length}")
+```
+#### non-null 단정 기호 (!!.)
+변수에 할당된 값이 null이 아님을 단정함   
+컴파일러가 null 검사 없이 무시함   
+변수에 null이 할당되어 있어도 컴파일은 잘 진행되지만 실행 중 NPE를 발생시킴
+```kotlin
+println("str1: $str1, length: ${str1!!.length}") // NPE 강제 발생
+```
+#### 엘비스 연산자 (?:)
+변수가 null인지 아닌지 검사하여 null이 아니라면 왼쪽 식을 그대로 실행하고 null이라면 오른쪽 식을 실행   
+null을 허용한 변수를 조금 더 안전하게 사용하려면 **세이프 콜과 엘비스 연산자를 함께 사용**하면 됨   
+```kotlin
+println("str1: $str1, length: ${str1?.length?:-1}")
+```
