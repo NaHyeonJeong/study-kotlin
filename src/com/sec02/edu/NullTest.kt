@@ -1,4 +1,4 @@
-package com.nullex.edu
+package com.sec02.edu
 
 fun main(){
     // null 사용 위해 자료형 뒤에 ? 기호 명시 필수

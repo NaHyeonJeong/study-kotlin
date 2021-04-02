@@ -1,6 +1,6 @@
-package com.hj.edu
+package com.sec01.edu
 
-import com.hj.edu.Person as User
+import com.sec01.edu.Person as User
 import kotlin.math.PI
 import kotlin.math.abs
 
