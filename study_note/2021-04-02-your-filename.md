@@ -1,4 +1,5 @@
 # 2021.04.02.Fri
+혹시 잘못 작성한게 있다면 이 글을 볼 누군가에게 부탁합니다... 알려주세요ㅠㅠ
 ## 코틀린의 function
 ### 작성 방법
 솔직히 다른 언어 공부해봐서 함수 작성법은 비슷하다고 느낌
@@ -114,7 +115,8 @@ fun check() {
 일급 함수에 이름이 없는 경우 '람다식 함수' 또는 '람다식' 이라고 부름   
 **즉, 람다식은 일급 객체의 특징을 가진 이름 없는 함수**
 ### 고차 함수(High-order Function)
-다른 함수(일반 함수)를 인자로 사용하거나 함수를 결괏값으로 반환하는 함수
+다른 함수(일반 함수)를 인자로 사용하거나 함수를 결괏값으로 반환하는 함수  
+== 인자나 반환값으로 함수를 사용한다
 ```kotlin
 fun main(){
     println(highFunc{x, y -> x + y}, 10, 20) // 람다식 함수를 인자로 넘김
@@ -125,3 +127,79 @@ fun highFunc(sum: (Int, Int) -> Int, a: Int, b: Int) = sum(a, b) // sum 매개�
 * 순수 함수를 사용해야 함
 * 람다식을 사용할 수 있음
 * 고차 함수를 사용할 수 있음
+
+## 고차 함수와 람다식
+### 고차 함수의 형태
+#### 람다식을 인자나 반환값으로 사용하는 고차함수
+람다식을 함수의 인자나 함수의 반환값으로 사용할 수 있음. 당연히 변수에도 할당 가능   
+(추가 정보) 람다식이 여러 줄이면 많은 표현식 중 "마지막 표현식"으로 처리해서 반환됨
+```kotlin
+fun main() {
+  var result: Int
+  result = highOrder({x, y -> x + y}, 10, 20)
+  println(result)
+}
+// 람다식의 자료형만 선언해줌
+fun highOrder(sum: (Int, Int) -> Int, a: Int, b: Int): Int {
+  return sum(a, b)
+}
+```
+#### 람다식에 인자나 반환값이 없는 람다식 함수
+```kotlin
+var out: () -> Unit = {println("Hello Kotlin")}
+// 자료형 추론 가능 >> var out = {println("Hello Kotlin")} 와 같이 생략 가능
+out() // 변수를 함수처럼 사용
+val new = out // 람다식 변수를 다른 변수에 할당
+new()
+```
+### 람다식과 고차 함수 호출하기
+당연히 call-by-value 있고, call-by-name 있음   
+그렇지만 kotlin 에서는 call-by-value가 기본적이라고 함   
+다른건 다 아는 내용이라 괜찮았고 조금 뭐지? 싶었던 '다른 함수의 참조에 의한 일반 함수 호출'을 적어보고자 함
+#### 다른 함수의 참조에 의한 일반 함수 호출
+```kotlin
+fun main() {
+    // 1. 인자와 반환값이 있는 함수
+    val res1 = funcParam(3, 2, ::sum0)
+    println(res1)
+    // 2. 인자가 없는 함수
+    hello(::text)
+    // 3. 일반 변수에 값처럼 할당
+    val likeLambda = ::sum0
+    println(likeLambda(6, 6))
+}
+
+// 일반 함수
+fun sum0(a: Int, b: Int) = a + b
+fun text(a: String, b:String) = "Hi! $a $b" 
+// 매개 변수 중 하나가 람다식
+fun funcParam(a: Int, b: Int, c: (Int, Int) -> Int): Int{
+    return c(a, b)
+}
+// 람다식의 매개변수가 2개
+fun hello(body: (String, String) -> String): Unit{
+    // 여기서 결국 body 는 text 의 값을 가져다 씀
+    println(body("Hello", "Kotlin"))
+}
+```
+뭐지? 싶었던거는 바로 *hello(::text)* 인데 이거는 다음과 같은 의미를 가진다고 한다
+* hello({a, b -> text(a, b)}) // 람다식 표현 
+* hello{a, b -> text(a, b)} // 소괄호 생략
+### 람다식의 매개변수
+매개변수가 여러개인 경우만 보면 다른거는 금방 사용할 것 같아서 매개변수가 여러개인 경우를 정리한다
+```kotlin
+fun main() {
+    twoLambda({a, b -> "First $a, $b"}, {"Second $it"})
+    twoLambda({a, b -> "First $a, $b"}) {"Second $it"} // 위와 동일
+}
+fun twoLambda(first: (String, String) -> String, second: (String) -> String) {
+    println(first("OneParam", "TwoParam"))
+    println(second("OneParam"))
+}
+```
+여기서 확인할 것은 아마도 *$it* 임   
+이거는 람다식에서 매개변수가 1개일 경우에 사용할 수 있는 일종의 줄임말 같은 거다   
+매개변수가 여러개인 경우가 아닌 second 처럼 한 개면 {a -> "Second $a"} 이렇게 쓸 필요 없이
+{"Second $it"} 이렇게 간단히 표현이 가능함
+---
+오늘 공부 끝!
