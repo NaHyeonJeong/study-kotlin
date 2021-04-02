@@ -185,8 +185,9 @@ fun hello(body: (String, String) -> String): Unit{
 뭐지? 싶었던거는 바로 *hello(::text)* 인데 이거는 다음과 같은 의미를 가진다고 한다
 * hello({a, b -> text(a, b)}) // 람다식 표현 
 * hello{a, b -> text(a, b)} // 소괄호 생략
+
 ### 람다식의 매개변수
-매개변수가 여러개인 경우만 보면 다른거는 금방 사용할 것 같아서 매개변수가 여러개인 경우를 정리한다
+매개변수가 여러개인 경우만 보면 다른거는 금방 사용할 것 같아서 매개변수가 여러개인 경우를 정리한다   
 ```kotlin
 fun main() {
     twoLambda({a, b -> "First $a, $b"}, {"Second $it"})
@@ -199,7 +200,6 @@ fun twoLambda(first: (String, String) -> String, second: (String) -> String) {
 ```
 여기서 확인할 것은 아마도 *$it* 임   
 이거는 람다식에서 매개변수가 1개일 경우에 사용할 수 있는 일종의 줄임말 같은 거다   
-매개변수가 여러개인 경우가 아닌 second 처럼 한 개면 {a -> "Second $a"} 이렇게 쓸 필요 없이
-{"Second $it"} 이렇게 간단히 표현이 가능함
----
+매개변수가 여러개인 경우가 아닌 second 처럼 한 개면 {a -> "Second $a"} 이렇게 쓸 필요 없이 {"Second $it"} 이렇게 간단히 표현이 가능함
+
 오늘 공부 끝!
