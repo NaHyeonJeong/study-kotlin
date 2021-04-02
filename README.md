@@ -5,4 +5,4 @@
 저자 : 황영덕   
 링크 : <http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9791163030843&orderClick=LAG&Kc=>
 
-공부 노트📚는 study_note 폴더에 있음
+공부 노트📚는 study_note 폴더에 있음 (다소 🐶판 일 수 있음)
